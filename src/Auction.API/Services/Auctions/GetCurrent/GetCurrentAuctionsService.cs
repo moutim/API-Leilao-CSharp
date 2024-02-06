@@ -1,17 +1,19 @@
 ﻿namespace Auction.API.Services.Auctions.GetCurrent;
 
 using Auction.API.Entities;
+using Auction.API.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 public class GetCurrentAuctionsService
 {
-    public Auction Execute()
+    public Auction? Execute()
     {
-        return new Auction
-        {
-            Id = 1,
-            Ends = DateTime.Now,
-            Starts = DateTime.Now,
-            Name = "Test"
-        };
+        AuctionDbContext repository = new();
+
+        DateTime today = DateTime.Now;
+
+        Auction? result = repository.Auctions.Include(auction => auction.Items).FirstOrDefault(auction => today >= auction.Starts && today <= auction.Ends);
+
+        return result;
     }
 }
