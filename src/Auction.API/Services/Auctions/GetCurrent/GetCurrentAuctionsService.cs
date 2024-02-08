@@ -10,7 +10,7 @@ public class GetCurrentAuctionsService
     {
         AuctionDbContext repository = new();
 
-        DateTime today = DateTime.Now;
+        DateTime today = new(2024, 01, 25);
 
         Auction? result = repository.Auctions.Include(auction => auction.Items).FirstOrDefault(auction => today >= auction.Starts && today <= auction.Ends);
 

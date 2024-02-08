@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Auction.API.Entities;
 
-[Route("[controller]")]
-[ApiController]
-public class AuctionController : ControllerBase
+public class AuctionController : AuctionBaseController
 {
     [HttpGet]
     [ProducesResponseType(typeof(Auction[]), StatusCodes.Status200OK)]
@@ -16,7 +14,7 @@ public class AuctionController : ControllerBase
     {
         GetCurrentAuctionsService useService = new();
 
-        Auction result = useService.Execute();
+        Auction? result = useService.Execute();
 
         if (result is null) return NoContent();
 
